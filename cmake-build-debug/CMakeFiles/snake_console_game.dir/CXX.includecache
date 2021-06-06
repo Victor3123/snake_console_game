@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+D:/snake_the_game/snake_console_game/Point.h
+
+D:/snake_the_game/snake_console_game/Renderable.h
+Screen.h
+D:/snake_the_game/snake_console_game/Screen.h
+
+D:/snake_the_game/snake_console_game/Screen.h
+iostream
+-
+Windows.h
+-
+vector
+-
+Point.h
+D:/snake_the_game/snake_console_game/Point.h
+
+D:/snake_the_game/snake_console_game/Snake.h
+Renderable.h
+D:/snake_the_game/snake_console_game/Renderable.h
+Point.h
+D:/snake_the_game/snake_console_game/Point.h
+
+D:/snake_the_game/snake_console_game/main.cpp
+Screen.h
+D:/snake_the_game/snake_console_game/Screen.h
+Snake.h
+D:/snake_the_game/snake_console_game/Snake.h
+
