@@ -6,6 +6,12 @@
 
 #IncludeRegexTransform: 
 
+D:/snake_the_game/snake_console_game/Controller.h
+windows.h
+-
+conio.h
+-
+
 D:/snake_the_game/snake_console_game/Point.h
 
 D:/snake_the_game/snake_console_game/Renderable.h
@@ -33,4 +39,10 @@ Screen.h
 D:/snake_the_game/snake_console_game/Screen.h
 Snake.h
 D:/snake_the_game/snake_console_game/Snake.h
+Controller.h
+D:/snake_the_game/snake_console_game/Controller.h
+ctime
+-
+windows.h
+-
 

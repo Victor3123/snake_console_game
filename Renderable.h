@@ -12,11 +12,12 @@ class Renderable
 {
 public:
 
-    Screen screen;
+    Screen* screen;
 
-    Renderable(Screen& screen)
+
+    Renderable(Screen &screen1)
     {
-        this->screen = screen;
+        screen = &screen1;
     }
 
     void render()

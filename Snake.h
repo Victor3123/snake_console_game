@@ -14,9 +14,13 @@ public:
     using Renderable::Renderable;
 
     void render() {
-        this->screen.setPoint(*new Point(3, 3), '*');
-        this->screen.setPoint(*new Point(2, 3), '*');
-        this->screen.setPoint(*new Point(1, 3), '*');
+        this->screen->setPoint(*new Point(3, 3), '*');
+        this->screen->setPoint(*new Point(2, 3), '*');
+        this->screen->setPoint(*new Point(1, 3), '*');
+    }
+
+    void move(){
+
     }
 };
 
