@@ -12,11 +12,23 @@ using namespace std;
 
 class Controller {
 private:
-    int lastKey = NULL;
+    int lastKey = VK_UP;
 
 public:
+
+
     void readKey(){
-        this->lastKey = getch();
+        if (GetKeyState(VK_ESCAPE) & 0x8000) {
+            this->lastKey = VK_ESCAPE;
+        }else if(GetKeyState(VK_LEFT) & 0x8000){
+            this->lastKey = VK_LEFT;
+        }else if(GetKeyState(VK_RIGHT) & 0x8000){
+            this->lastKey = VK_RIGHT;
+        }else if(GetKeyState(VK_UP) & 0x8000){
+            this->lastKey = VK_UP;
+        }else if(GetKeyState(VK_DOWN) & 0x8000){
+            this->lastKey = VK_DOWN;
+        }
     }
 
     int getLastKey(){

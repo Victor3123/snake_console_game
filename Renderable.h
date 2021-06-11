@@ -15,9 +15,9 @@ public:
     Screen* screen;
 
 
-    Renderable(Screen &screen1)
+    Renderable(Screen &screen)
     {
-        screen = &screen1;
+        this->screen = &screen;
     }
 
     void render()

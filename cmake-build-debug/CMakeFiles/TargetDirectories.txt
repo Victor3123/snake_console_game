@@ -1,3 +1,0 @@
-D:/snake_the_game/snake_console_game/cmake-build-debug/CMakeFiles/snake_console_game.dir
-D:/snake_the_game/snake_console_game/cmake-build-debug/CMakeFiles/edit_cache.dir
-D:/snake_the_game/snake_console_game/cmake-build-debug/CMakeFiles/rebuild_cache.dir

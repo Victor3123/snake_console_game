@@ -58,7 +58,7 @@ public:
         {
             for (int y = 0; y < sizeY; y++)
             {
-                cout << screen[x][y];
+                cout << screen[y][x];
             }
             cout << endl;
         }

@@ -10,7 +10,7 @@ using namespace std;
 int main() {
     Screen screen;
     Controller controller;
-    Snake snake(screen);
+    Snake snake(screen, controller);
 
 
     while (true) {
@@ -24,10 +24,9 @@ int main() {
         int lastRenderTime = time(0);
         int currentTime = lastRenderTime;
         while (currentTime = time(0) <= lastRenderTime) {
-            if (GetKeyState(VK_ESCAPE) & 0x8000) {
+            controller.readKey();
+            if (controller.getLastKey() == VK_ESCAPE){
                 exit(0);
-            } else {
-                Sleep(5);
             }
         }
 
