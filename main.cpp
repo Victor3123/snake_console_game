@@ -13,13 +13,7 @@ int main() {
     Snake snake(screen, controller);
 
 
-    while (true) {
-
-        screen.clear();
-
-        snake.render();
-
-        screen.render();
+    while (snake.getSnakeAlive() == true) {
 
         int lastRenderTime = time(0);
         int currentTime = lastRenderTime;
@@ -32,6 +26,13 @@ int main() {
 
         lastRenderTime = currentTime;
 
+        screen.clear();
+
+        snake.render();
+
+        screen.render();
+
+        snake.move();
 
     }
     return 0;

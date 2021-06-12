@@ -13,6 +13,8 @@
 
 class Snake : public Renderable {
 private:
+    bool alive = true;
+
     const string DIR_FORWARD = "DIR_FORWARD";
     const string DIR_LEFT = "DIR_LEFT";
     const string DIR_RIGHT = "DIR_RIGHT";
@@ -25,32 +27,6 @@ private:
 
     string direction = DIR_FORWARD;
 
-    map<int, map<string, string>> translations = {
-            {VK_UP,    {
-                               {POS_0, DIR_FORWARD},
-                               {POS_90, DIR_LEFT},
-                               {POS_180, DIR_IGNORE},
-                               {POS_270, DIR_RIGHT}
-                       }},
-            {VK_DOWN,  {
-                               {POS_0, DIR_IGNORE},
-                               {POS_90, DIR_RIGHT},
-                               {POS_180, DIR_FORWARD},
-                               {POS_270, DIR_LEFT}
-                       }},
-            {VK_LEFT,  {
-                               {POS_0, DIR_LEFT},
-                               {POS_90, DIR_IGNORE},
-                               {POS_180, DIR_RIGHT},
-                               {POS_270, DIR_FORWARD}
-                       }},
-            {VK_RIGHT, {
-                               {POS_0, DIR_RIGHT},
-                               {POS_90, DIR_FORWARD},
-                               {POS_180, DIR_LEFT},
-                               {POS_270, DIR_IGNORE}
-                       }}
-    };
 
     vector<Point*> body;
 
@@ -64,22 +40,74 @@ public:
         this->body.push_back(new Point(3, 1));
     }
 
+    void setSnakeAlive(bool alive){
+        this->alive = alive;
+    }
+
+    bool getSnakeAlive(){
+        return this->alive;
+    }
+
     void render() {
         for (Point *point : this->body) {
             this->screen->setPoint(*point, '*');
         }
     }
 
+    void deleteTail() {
+        vector<Point*> oldBody = this->body;
+        vector<Point*> newBody;
 
-    string translate(int key) {
-        return translations[key][this->direction];
+        for (int i = 1; i < oldBody.size(); ++i) {
+            newBody.push_back(oldBody[i]);
+        }
+
+        this->body = newBody;
+        delete &oldBody;
     }
 
-    void move() {
-        int lastKey = controller->getLastKey();
-        if(lastKey == VK_UP){
-
+    int translate(int key) {
+        if (this->direction == this->POS_0 && key == VK_DOWN){
+            return VK_UP;
+        } else if (this->direction == POS_90 && key == VK_LEFT){
+            return VK_RIGHT;
+        } else if(this->direction == POS_180 && key == VK_UP){
+            return VK_DOWN;
+        } else if (this->direction == POS_270 && key == VK_RIGHT){
+            return VK_LEFT;
         }
+        return key;
+    }
+
+    void getNextPoint(){    }
+
+    void move() {
+
+        int key = this->translate(this->controller->getLastKey());
+        Point* head = this->body.back();
+        Point* next = new Point(1,1);
+
+        if(key == VK_UP){
+            next->x = head->x;
+            next->y = head->y - 1;
+            this->direction=POS_0;
+        } else if (key == VK_RIGHT){
+            next->x = head->x + 1;
+            next->y = head->y;
+            this->direction=POS_90;
+        } else if(key == VK_DOWN){
+            next->x = head->x;
+            next->y = head->y + 1;
+            this->direction=POS_180;
+        } else if(key == VK_LEFT){
+            next->x = head->x - 1;
+            next->y = head->y;
+            this->direction=POS_270;
+        }
+
+        this->body.push_back(next);
+
+        deleteTail();
     }
 };
 

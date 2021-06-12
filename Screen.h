@@ -16,57 +16,46 @@
 
 using namespace std;
 
-class Screen
-{
+class Screen {
 private:
 
-    int sizeX = 10 ;
+    int sizeX = 10;
     int sizeY = 10;
     int offsetX = 5;
     int offsetY = 5;
     int blancChar = ' ';
 
-    vector<vector<char>>screen;
+    vector<vector<char>> screen;
 
 public:
-    Screen()
-    {
+    Screen() {
         screen.resize(sizeX);
-        for (int i = 0; i < sizeX; i++)
-        {
+        for (int i = 0; i < sizeX; i++) {
             screen[i].resize(sizeY);
         }
     }
 
 
-    void clear()
-    {
-        for(int x = 0; x < sizeX; x++)
-        {
-            for(int y = 0; y < sizeY; y++)
-            {
+    void clear() {
+        for (int x = 0; x < sizeX; x++) {
+            for (int y = 0; y < sizeY; y++) {
                 screen[x][y] = this->blancChar;
             }
         }
     }
 
-    void render()
-    {
+    void render() {
         system("cls");
 
-        for(int x = 0; x < sizeX; x++)
-        {
-            for (int y = 0; y < sizeY; y++)
-            {
-                cout << screen[y][x];
+        for (int x = 0; x < sizeX; x++) {
+            for (int y = 0; y < sizeY; y++) {
+                cout << screen[y][x] << " ";
             }
             cout << endl;
         }
-
     }
 
-    void setPoint(Point point, char content)
-    {
+    void setPoint(Point point, char content) {
         screen[point.x + offsetX - 1][point.y + offsetY - 1] = content;
     }
 
