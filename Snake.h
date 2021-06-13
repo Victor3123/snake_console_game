@@ -5,7 +5,6 @@
 #ifndef SNAKE_CONSOLE_GAME_SNAKE_H
 #define SNAKE_CONSOLE_GAME_SNAKE_H
 
-#include <map>
 #include <vector>
 #include "Renderable.h"
 #include "Point.h"
@@ -35,9 +34,9 @@ public:
 
     Snake(Screen &screen, Controller &controller) : Renderable(screen) {
         this->controller = &controller;
-        this->body.push_back(new Point(3, 3));
-        this->body.push_back(new Point(3, 2));
-        this->body.push_back(new Point(3, 1));
+        this->body.push_back(new Point(10, 10));
+        this->body.push_back(new Point(10, 9));
+        this->body.push_back(new Point(10, 8));
     }
 
     void setSnakeAlive(bool alive){

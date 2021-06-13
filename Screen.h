@@ -19,10 +19,10 @@ using namespace std;
 class Screen {
 private:
 
-    int sizeX = 10;
-    int sizeY = 10;
-    int offsetX = 5;
-    int offsetY = 5;
+    int sizeX = 21;
+    int sizeY = 21;
+    int offsetX = 1;
+    int offsetY = 1;
     int blancChar = ' ';
 
     vector<vector<char>> screen;
@@ -47,6 +47,16 @@ public:
     void render() {
         system("cls");
 
+        for(int x = 0; x < sizeX; x++){
+            screen[0][x] = '+';
+            screen[sizeY-1][x] = '+';
+        }
+        for(int y = 0; y < sizeY; y++){
+            screen[y][0] = '+';
+            screen[y][sizeX -1] = '+';
+        }
+
+
         for (int x = 0; x < sizeX; x++) {
             for (int y = 0; y < sizeY; y++) {
                 cout << screen[y][x] << " ";
@@ -58,7 +68,6 @@ public:
     void setPoint(Point point, char content) {
         screen[point.x + offsetX - 1][point.y + offsetY - 1] = content;
     }
-
 };
 
 

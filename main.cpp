@@ -1,12 +1,18 @@
 #include "Screen.h"
 #include "Snake.h"
-#include "Controller.h"
-#include <ctime>
-#include <windows.h>
+#include <sys/time.h>
+
 
 
 using namespace std;
 
+int64_t currentTimeMillis() {
+    struct timeval time;
+    gettimeofday(&time, NULL);
+    int64_t s1 = (int64_t)(time.tv_sec) * 1000;
+    int64_t s2 = (time.tv_usec / 1000);
+    return s1 + s2;
+}
 int main() {
     Screen screen;
     Controller controller;
@@ -15,9 +21,10 @@ int main() {
 
     while (snake.getSnakeAlive() == true) {
 
-        int lastRenderTime = time(0);
+        int lastRenderTime = currentTimeMillis();
         int currentTime = lastRenderTime;
-        while (currentTime = time(0) <= lastRenderTime) {
+
+        while ((currentTime = currentTimeMillis()) <= (lastRenderTime + 350)) {
             controller.readKey();
             if (controller.getLastKey() == VK_ESCAPE){
                 exit(0);
@@ -27,13 +34,14 @@ int main() {
         lastRenderTime = currentTime;
 
         screen.clear();
-
+        snake.move();
         snake.render();
 
         screen.render();
 
-        snake.move();
+
 
     }
+
     return 0;
 }
