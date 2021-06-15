@@ -37,7 +37,12 @@ public:
         this->body.push_back(new Point(10, 10));
         this->body.push_back(new Point(10, 9));
         this->body.push_back(new Point(10, 8));
+        this->body.push_back(new Point(10, 7));
+        this->body.push_back(new Point(10, 6));
+        this->body.push_back(new Point(10, 5));
     }
+
+
 
     void setSnakeAlive(bool alive){
         this->alive = alive;
@@ -78,13 +83,8 @@ public:
         return key;
     }
 
-    void getNextPoint(){    }
-
-    void move() {
-
-        int key = this->translate(this->controller->getLastKey());
-        Point* head = this->body.back();
-        Point* next = new Point(1,1);
+    Point* getNextPoint(int key, Point* head){
+        Point* next = new Point();
 
         if(key == VK_UP){
             next->x = head->x;
@@ -103,11 +103,33 @@ public:
             next->y = head->y;
             this->direction=POS_270;
         }
+        return next;
+    }
 
+    void move() {
+
+        int key = this->translate(this->controller->getLastKey());
+        Point* head = this->body.back();
+        Point* next = this->getNextPoint(key, head);
+        this->validate(next);
         this->body.push_back(next);
 
         deleteTail();
     }
+
+    void validateBody(Point* next){
+        for(Point *point : this->body){
+            if(next->x == point->x && next->y == point->y){
+                throw 2;
+            }
+        }
+    }
+
+    void validate(Point* next){
+        this->screen->validatePoint(next);
+        this->validateBody(next);
+    }
+
 };
 
 

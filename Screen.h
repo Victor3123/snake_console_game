@@ -17,6 +17,9 @@
 using namespace std;
 
 class Screen {
+protected:
+    vector<vector<char>> screen;
+
 private:
 
     int sizeX = 21;
@@ -24,8 +27,6 @@ private:
     int offsetX = 1;
     int offsetY = 1;
     int blancChar = ' ';
-
-    vector<vector<char>> screen;
 
 public:
     Screen() {
@@ -67,6 +68,14 @@ public:
 
     void setPoint(Point point, char content) {
         screen[point.x + offsetX - 1][point.y + offsetY - 1] = content;
+    }
+
+    void validatePoint(Point* next){
+        if(next->x < offsetX || next->x > sizeX - 1 - offsetX){
+            throw 1;
+        } else if(next->y < offsetY || next->y > sizeY - 1 - offsetY){
+            throw 1;
+        }
     }
 };
 
