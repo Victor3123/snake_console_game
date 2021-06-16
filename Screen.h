@@ -17,18 +17,17 @@
 using namespace std;
 
 class Screen {
-protected:
-    vector<vector<char>> screen;
 
 private:
+    int blancChar = ' ';
 
+public:
+    vector<vector<char>> screen;
     int sizeX = 21;
     int sizeY = 21;
     int offsetX = 1;
     int offsetY = 1;
-    int blancChar = ' ';
 
-public:
     Screen() {
         screen.resize(sizeX);
         for (int i = 0; i < sizeX; i++) {

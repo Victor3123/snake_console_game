@@ -1,7 +1,8 @@
+#include <sys/time.h>
+#include <fstream>
+#include "Apple.h"
 #include "Screen.h"
 #include "Snake.h"
-#include <sys/time.h>
-#include <windows.h>
 
 
 using namespace std;
@@ -16,18 +17,23 @@ int64_t currentTimeMillis() {
 }
 
 int main() {
+    srand(time(0));
+
     ShowCursor(false);
     Screen screen;
     Controller controller;
     Snake snake(screen, controller);
+    Apple apple(screen, new Point(13, 10));
 
 
     try {
-        while (snake.getSnakeAlive() == true) {
+        while (true) {
+
+
             int lastRenderTime = currentTimeMillis();
             int currentTime = lastRenderTime;
 
-            while ((currentTime = currentTimeMillis()) <= (lastRenderTime + 350)) {
+            while ((currentTime = currentTimeMillis()) <= (lastRenderTime + 300)) {
                 controller.readKey();
                 if (controller.getLastKey() == VK_ESCAPE) {
                     exit(0);
@@ -37,10 +43,11 @@ int main() {
             lastRenderTime = currentTime;
 
             screen.clear();
-            snake.move();
+            snake.move(apple);
             snake.render();
-
+            apple.render();
             screen.render();
+            cout << "\nTo quit Press ESC;  Current score is " << snake.body.size() - 3;
         }
     } catch (int e) {
         if(e == 1){

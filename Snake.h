@@ -9,11 +9,11 @@
 #include "Renderable.h"
 #include "Point.h"
 #include "Controller.h"
+#include "Apple.h"
+
 
 class Snake : public Renderable {
 private:
-    bool alive = true;
-
     const string DIR_FORWARD = "DIR_FORWARD";
     const string DIR_LEFT = "DIR_LEFT";
     const string DIR_RIGHT = "DIR_RIGHT";
@@ -27,9 +27,10 @@ private:
     string direction = DIR_FORWARD;
 
 
-    vector<Point*> body;
 
 public:
+    vector<Point *> body;
+
     Controller *controller;
 
     Snake(Screen &screen, Controller &controller) : Renderable(screen) {
@@ -37,20 +38,9 @@ public:
         this->body.push_back(new Point(10, 10));
         this->body.push_back(new Point(10, 9));
         this->body.push_back(new Point(10, 8));
-        this->body.push_back(new Point(10, 7));
-        this->body.push_back(new Point(10, 6));
-        this->body.push_back(new Point(10, 5));
+
     }
 
-
-
-    void setSnakeAlive(bool alive){
-        this->alive = alive;
-    }
-
-    bool getSnakeAlive(){
-        return this->alive;
-    }
 
     void render() {
         for (Point *point : this->body) {
@@ -59,8 +49,8 @@ public:
     }
 
     void deleteTail() {
-        vector<Point*> oldBody = this->body;
-        vector<Point*> newBody;
+        vector<Point *> oldBody = this->body;
+        vector<Point *> newBody;
 
         for (int i = 1; i < oldBody.size(); ++i) {
             newBody.push_back(oldBody[i]);
@@ -71,61 +61,63 @@ public:
     }
 
     int translate(int key) {
-        if (this->direction == this->POS_0 && key == VK_DOWN){
+        if (this->direction == this->POS_0 && key == VK_DOWN) {
             return VK_UP;
-        } else if (this->direction == POS_90 && key == VK_LEFT){
+        } else if (this->direction == POS_90 && key == VK_LEFT) {
             return VK_RIGHT;
-        } else if(this->direction == POS_180 && key == VK_UP){
+        } else if (this->direction == POS_180 && key == VK_UP) {
             return VK_DOWN;
-        } else if (this->direction == POS_270 && key == VK_RIGHT){
+        } else if (this->direction == POS_270 && key == VK_RIGHT) {
             return VK_LEFT;
         }
         return key;
     }
 
-    Point* getNextPoint(int key, Point* head){
-        Point* next = new Point();
+    Point *getNextPoint(int key, Point *head) {
+        Point *next = new Point();
 
-        if(key == VK_UP){
+        if (key == VK_UP) {
             next->x = head->x;
             next->y = head->y - 1;
-            this->direction=POS_0;
-        } else if (key == VK_RIGHT){
+            this->direction = POS_0;
+        } else if (key == VK_RIGHT) {
             next->x = head->x + 1;
             next->y = head->y;
-            this->direction=POS_90;
-        } else if(key == VK_DOWN){
+            this->direction = POS_90;
+        } else if (key == VK_DOWN) {
             next->x = head->x;
             next->y = head->y + 1;
-            this->direction=POS_180;
-        } else if(key == VK_LEFT){
+            this->direction = POS_180;
+        } else if (key == VK_LEFT) {
             next->x = head->x - 1;
             next->y = head->y;
-            this->direction=POS_270;
+            this->direction = POS_270;
         }
         return next;
     }
 
-    void move() {
+    void move(Apple &apple) {
 
         int key = this->translate(this->controller->getLastKey());
-        Point* head = this->body.back();
-        Point* next = this->getNextPoint(key, head);
+        Point *head = this->body.back();
+        Point *next = this->getNextPoint(key, head);
         this->validate(next);
         this->body.push_back(next);
+        if (!apple.isEaten(next)) {
+            deleteTail();
+        }
 
-        deleteTail();
     }
 
-    void validateBody(Point* next){
-        for(Point *point : this->body){
-            if(next->x == point->x && next->y == point->y){
+    void validateBody(Point *next) {
+        for (Point *point : this->body) {
+            if (next->x == point->x && next->y == point->y) {
                 throw 2;
             }
         }
     }
 
-    void validate(Point* next){
+    void validate(Point *next) {
         this->screen->validatePoint(next);
         this->validateBody(next);
     }
